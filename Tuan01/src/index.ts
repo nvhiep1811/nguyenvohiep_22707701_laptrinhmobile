@@ -113,9 +113,9 @@ console.log('Developer: ' + dev.do());
 console.log('----------Bài 15----------');
 lib.addBook(myBook);
 console.log('List book of library: ' )
+console.log(lib.listBooks);
 
 console.log('----------Bài 16----------');
-console.log(lib.listBooks);
 console.log(stringBox.boxValue);
 
 console.log('----------Bài 17----------');
