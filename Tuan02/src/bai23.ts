@@ -1,19 +1,12 @@
-export async function fetchData(link: string) {
+export async function fetchTodos(link:string) {
     try {
         const response = await fetch(link);
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        return data;
+        return data.filter((todo: any) => todo.completed);
     } catch (error) {
         console.error(error);
     }
 }
-
-async function run21(link:string) {
-   const data = await fetchData(link);
-   console.log(data);
-}
-
-run21("https://jsonplaceholder.typicode.com/todos/1");

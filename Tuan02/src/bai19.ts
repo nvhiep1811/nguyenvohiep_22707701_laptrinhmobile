@@ -1,6 +1,6 @@
 import { fetchUser } from "./bai18";
 
-async function fetchUsers(ids: number[]): Promise<{id: any, name: string}[]> {
+export async function fetchUsers(ids: number[]): Promise<{id: any, name: string}[]> {
     const users = await Promise.all(ids.map(id => fetchUser(id)));
     return users;
 }

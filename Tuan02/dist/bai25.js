@@ -9,16 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+exports.downloadFile = downloadFile;
+function downloadFile(file) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
-        }
-        catch (error) {
-            console.error(error);
-        }
+        console.log("Downloading file...");
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve("Done!");
+            }, 3000);
+        });
     });
 }
-run20();

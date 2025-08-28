@@ -5,10 +5,3 @@ export async function fetchUser(id: any): Promise<{id: any, name: string}> {
         }, 1000);
     });
 }
-
-// async function run18() {
-//     const user = await fetchUser(1);
-//     console.log(user);
-// }
-
-// run18();

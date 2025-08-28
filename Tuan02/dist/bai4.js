@@ -1,7 +1,7 @@
 "use strict";
-var myPromise = new Promise((resolve, reject) => {
-    resolve(Math.random());
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.myPromise = void 0;
+exports.myPromise = new Promise((resolve, reject) => {
+    resolve(Math.floor(Math.random() * 100));
     reject();
 });
-myPromise.then(value => console.log(value))
-    .catch(error => console.log(error));

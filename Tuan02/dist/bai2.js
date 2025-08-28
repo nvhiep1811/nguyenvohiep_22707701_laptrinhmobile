@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.resolveAfterOneSecond = resolveAfterOneSecond;
 function resolveAfterOneSecond() {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -6,6 +8,3 @@ function resolveAfterOneSecond() {
         }, 1000);
     });
 }
-resolveAfterOneSecond().then((value) => {
-    console.log(value);
-});

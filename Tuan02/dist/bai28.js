@@ -9,16 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+exports.asyncTask = asyncTask;
+exports.batchProcess = batchProcess;
+function asyncTask(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
-        }
-        catch (error) {
-            console.error(error);
-        }
+        const delay = Math.floor(Math.random() * 2000) + 500;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(`Task ${id} done in ${delay}ms`);
+            }, delay);
+        });
     });
 }
-run20();
+function batchProcess() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Starting tasks...");
+        const tasks = [1, 2, 3, 4, 5].map((id) => asyncTask(id));
+        const results = yield Promise.all(tasks);
+        console.log("All tasks completed:");
+        results.forEach(result => console.log(result));
+    });
+}

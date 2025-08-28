@@ -8,20 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bai13 = bai13;
 function bai13() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');//success
             const response = yield fetch('https://api.example.com/data'); //error
             if (!response.ok) {
+                console.log("-----Bài 13-----");
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = yield response.json();
+            console.log("-----Bài 13-----");
             console.log(data);
         }
         catch (error) {
+            console.log("-----Bài 13-----");
             console.error(error);
         }
     });
 }
-bai13();

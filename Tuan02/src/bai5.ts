@@ -4,6 +4,4 @@ export function simulateTask(time: number) {
             resolve("Task done");
         }, time);
     })
-}
-
-simulateTask(1000).then((value) => console.log(value));                    
+}                   

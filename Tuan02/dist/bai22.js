@@ -9,16 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+const bai21_1 = require("./bai21");
+function run22() {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
-        }
-        catch (error) {
-            console.error(error);
+        for (var i = 0; i < 5; i++) {
+            const data = yield (0, bai21_1.fetchData)("https://jsonplaceholder.typicode.com/todos/1");
+            console.log(data);
         }
     });
 }
-run20();
+run22();

@@ -9,16 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+exports.queueProcess = queueProcess;
+const bai28_1 = require("./bai28");
+function queueProcess() {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
-        }
-        catch (error) {
-            console.error(error);
+        const tasks = [1, 2, 3, 4, 5].map((id) => (0, bai28_1.asyncTask)(id));
+        for (const task of tasks) {
+            const result = yield task;
+            console.log(result);
         }
     });
 }
-run20();

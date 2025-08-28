@@ -1,5 +1,7 @@
 "use strict";
-var promise10 = new Promise((resolve, reject) => {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.promise10 = void 0;
+exports.promise10 = new Promise((resolve, reject) => {
     const success = Math.random() > 0.5;
     setTimeout(() => {
         if (success) {
@@ -9,14 +11,4 @@ var promise10 = new Promise((resolve, reject) => {
             reject("Failure!");
         }
     }, 1000);
-});
-promise10
-    .then(value => {
-    console.log(value);
-})
-    .catch(error => {
-    console.log(error);
-})
-    .finally(() => {
-    console.log("Done");
 });

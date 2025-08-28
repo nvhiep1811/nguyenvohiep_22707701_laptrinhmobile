@@ -9,16 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+exports.postData = postData;
+function postData(data) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
+            const response = yield fetch("https://jsonplaceholder.typicode.com/todos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
         }
         catch (error) {
             console.error(error);
         }
     });
 }
-run20();

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.fetchUsers = fetchUsers;
 const bai18_1 = require("./bai18");
 function fetchUsers(ids) {
     return __awaiter(this, void 0, void 0, function* () {

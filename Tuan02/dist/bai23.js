@@ -9,16 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bai18_1 = require("./bai18");
-function run20() {
+exports.fetchTodos = fetchTodos;
+function fetchTodos(link) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, bai18_1.fetchUser)(1);
-            console.log(user);
+            const response = yield fetch(link);
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = yield response.json();
+            return data.filter((todo) => todo.completed);
         }
         catch (error) {
             console.error(error);
         }
     });
 }
-run20();

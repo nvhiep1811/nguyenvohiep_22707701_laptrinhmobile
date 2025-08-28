@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bai12 = bai12;
 const bai5_1 = require("./bai5");
 function bai12() {
     return __awaiter(this, void 0, void 0, function* () {
         let value = yield (0, bai5_1.simulateTask)(1000);
-        // console.log(value);
+        console.log("-----Bài 12-----");
+        console.log(value);
     });
 }
-bai12();

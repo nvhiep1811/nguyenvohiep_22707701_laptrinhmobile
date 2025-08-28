@@ -13,6 +13,7 @@ const bai15_1 = require("./bai15");
 function run16() {
     return __awaiter(this, void 0, void 0, function* () {
         const results = yield Promise.all([(0, bai15_1.fn1)(), (0, bai15_1.fn2)(), (0, bai15_1.fn3)()]);
+        console.log("-----Bài 16-----");
+        results.forEach(result => console.log(result));
     });
 }
-run16();

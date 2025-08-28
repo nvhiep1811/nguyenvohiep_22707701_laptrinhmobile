@@ -8,15 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bai11 = bai11;
 function bai11() {
     return __awaiter(this, void 0, void 0, function* () {
-        let promise = new Promise(function (resolve) {
+        return new Promise(function (resolve) {
             setTimeout(() => {
                 resolve("Hello Async");
             }, 2000);
         });
-        let value = yield promise;
-        console.log(value);
     });
 }
-bai11();

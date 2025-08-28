@@ -19,8 +19,3 @@ function fetchUser(id) {
         });
     });
 }
-// async function run18() {
-//     const user = await fetchUser(1);
-//     console.log(user);
-// }
-// run18();

@@ -1,9 +1,8 @@
 "use strict";
-let promise = new Promise(function (resolve) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.promise = void 0;
+exports.promise = new Promise(function (resolve) {
     setTimeout(() => {
         resolve("Hello Async");
     }, 2000);
-});
-promise.then((value) => {
-    console.log(value);
 });
