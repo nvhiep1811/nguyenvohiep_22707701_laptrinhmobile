@@ -6,7 +6,8 @@
     "esModuleInterop": true, /* Hỗ trợ import/export ES Modules */
     "outDir": "./dist", /* Thư mục chứa các tệp JavaScript đã biên dịch */
     "rootDir": "./src", /* Thư mục gốc chứa tệp TypeScript */
-    "skipLibCheck": true /* Bỏ qua kiểm tra các tệp khai báo thư viện */
+    "skipLibCheck": true, /* Bỏ qua kiểm tra các tệp khai báo thư viện */
+    "lib": ["DOM", "ES7", "ES2024"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

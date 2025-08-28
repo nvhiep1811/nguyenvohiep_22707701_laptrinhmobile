@@ -8,51 +8,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function asyncFunctionOne() {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fn1 = fn1;
+exports.fn2 = fn2;
+exports.fn3 = fn3;
+function fn1() {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise(resolve => {
             setTimeout(() => {
-                console.log("Async Function One completed.");
-                resolve("Result from Function One");
-            }, 1000);
+                resolve("Result from fn1");
+            }, 1500);
         });
     });
 }
-function asyncFunctionTwo() {
+function fn2() {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise(resolve => {
             setTimeout(() => {
-                console.log("Async Function Two completed.");
-                resolve("Result from Function Two");
+                resolve("Result from fn2");
             }, 500);
         });
     });
 }
-function asyncFunctionThree() {
+function fn3() {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise(resolve => {
             setTimeout(() => {
-                console.log("Async Function Three completed.");
-                resolve("Result from Function Three");
-            }, 700);
+                resolve("Result from fn3");
+            }, 1000);
         });
     });
 }
-function runSequentialAsyncOperations() {
+function run15() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("Starting sequential operations...");
-        try {
-            const resultOne = yield asyncFunctionOne();
-            console.log(`Received: ${resultOne}`);
-            const resultTwo = yield asyncFunctionTwo();
-            console.log(`Received: ${resultTwo}`);
-            const resultThree = yield asyncFunctionThree();
-            console.log(`Received: ${resultThree}`);
-            console.log("All sequential operations completed.");
-        }
-        catch (error) {
-            console.error("An error occurred during sequential operations:", error);
-        }
+        const result1 = yield fn1();
+        console.log(result1);
+        const result2 = yield fn2();
+        console.log(result2);
+        const result3 = yield fn3();
+        console.log(result3);
     });
 }
-runSequentialAsyncOperations();
+run15();

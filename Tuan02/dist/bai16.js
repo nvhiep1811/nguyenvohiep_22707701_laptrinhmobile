@@ -8,19 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function bai14(value) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const bai15_1 = require("./bai15");
+function run16() {
     return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(value * 3);
-            }, 1000);
-        });
+        const results = yield Promise.all([(0, bai15_1.fn1)(), (0, bai15_1.fn2)(), (0, bai15_1.fn3)()]);
     });
 }
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let result = yield bai14(123);
-        console.log(result);
-    });
-}
-run();
+run16();

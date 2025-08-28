@@ -8,19 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function bai14(value) {
+function fetchUser(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(value * 3);
-            }, 1000);
+                resolve({ id, name: "Hiep" });
+            }, 3000);
+            setTimeout(() => {
+                reject(new Error("Request timed out"));
+            }, 2000);
         });
     });
 }
-function run() {
+function run20() {
     return __awaiter(this, void 0, void 0, function* () {
-        let result = yield bai14(123);
-        console.log(result);
+        try {
+            const user = yield fetchUser(1);
+            console.log(user);
+        }
+        catch (error) {
+            console.error(error);
+        }
     });
 }
-run();
+run20();

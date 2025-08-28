@@ -8,19 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function bai14(value) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fetchUser = fetchUser;
+function fetchUser(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(value * 3);
+                resolve({ id, name: "Hiep" });
             }, 1000);
         });
     });
 }
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let result = yield bai14(123);
-        console.log(result);
-    });
-}
-run();
+// async function run18() {
+//     const user = await fetchUser(1);
+//     console.log(user);
+// }
+// run18();

@@ -1,48 +1,35 @@
-async function asyncFunctionOne(): Promise<string> {
+export async function fn1() {
     return new Promise(resolve => {
         setTimeout(() => {
-            console.log("Async Function One completed.");
-            resolve("Result from Function One");
+            resolve("Result from fn1");
+        }, 1500);
+    });
+}
+export async function fn2() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve("Result from fn2");
+        }, 500);
+    });
+}
+export async function fn3() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve("Result from fn3");
         }, 1000);
     });
 }
 
-async function asyncFunctionTwo(): Promise<string> {
-return new Promise(resolve => {
-    setTimeout(() => {
-    console.log("Async Function Two completed.");
-    resolve("Result from Function Two");
-    }, 500);
-});
-}
 
-async function asyncFunctionThree(): Promise<string> {
-return new Promise(resolve => {
-    setTimeout(() => {
-    console.log("Async Function Three completed.");
-    resolve("Result from Function Three");
-    }, 700);
-});
-}
+async function run15() {
+    const result1 = await fn1();
+    console.log(result1);
 
+    const result2 = await fn2();
+    console.log(result2);
 
-async function runSequentialAsyncOperations() {
-console.log("Starting sequential operations...");
-
-try {
-    const resultOne = await asyncFunctionOne();
-    console.log(`Received: ${resultOne}`);
-
-    const resultTwo = await asyncFunctionTwo();
-    console.log(`Received: ${resultTwo}`);
-
-    const resultThree = await asyncFunctionThree();
-    console.log(`Received: ${resultThree}`);
-
-    console.log("All sequential operations completed.");
-} catch (error) {
-    console.error("An error occurred during sequential operations:", error);
-}
+    const result3 = await fn3();
+    console.log(result3);
 }
   
-runSequentialAsyncOperations();
+run15();

@@ -6,4 +6,9 @@ async function bai14(value: number): Promise<Number> {
     });    
 }
 
-bai14(123);
+async function run() {
+    let result = await bai14(123);
+    console.log(result);
+}
+
+run();

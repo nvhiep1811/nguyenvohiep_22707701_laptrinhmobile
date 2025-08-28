@@ -8,19 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function bai14(value) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const bai18_1 = require("./bai18");
+function fetchUsers(ids) {
     return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(value * 3);
-            }, 1000);
-        });
+        const users = yield Promise.all(ids.map(id => (0, bai18_1.fetchUser)(id)));
+        return users;
     });
 }
-function run() {
+function run19() {
     return __awaiter(this, void 0, void 0, function* () {
-        let result = yield bai14(123);
-        console.log(result);
+        const users = yield fetchUsers([1, 2, 3]);
+        console.log(users);
     });
 }
-run();
+run19();
