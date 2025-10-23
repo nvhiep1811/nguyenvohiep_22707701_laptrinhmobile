@@ -1,47 +1,33 @@
 import CartItemCard from '@/components/CartItemCard';
-import { deleteItem, updateQty } from '@/db/cart.service';
-import React, { useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { CartContext } from '@/contexts/CartContext';
+import React, { useContext } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<{
-    id: number;
-    product_id: string;
-    name: string;
-    price: number;
-    qty: number;
-  }[]>([]);
+  const { cartItems, onIncrease, onDecrease, onRemove, formatter, handleCheckout } = useContext(CartContext);
 
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0);
 
-  const handleCheckout = () => {
-    Alert.alert('Thanh toán', `Tổng tiền: ${totalPrice.toLocaleString()} VND`, [
-      { text: 'OK' }
-    ]);
-  }
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Giỏ hàng</Text>
-      
+    <View style={styles.container}>      
       {cartItems.length === 0 ? (
-        <Text style={styles.emptyText}>Giỏ hàng trống</Text>
+        <Text style={styles.emptyText}>Cart is empty!</Text>
       ) : (
         <>
           <FlatList
             data={cartItems}
             keyExtractor={item => item.product_id}
             renderItem={({ item }) => <CartItemCard item={item} 
-                                      onIncrease={() => updateQty(item.id, item.qty + 1)}
-                                      onDecrease={() => updateQty(item.id, item.qty - 1)}
-                                      onRemove={() => deleteItem(item.id)} />}
+                                      onIncrease={() => onIncrease(item.id, item.qty)}
+                                      onDecrease={() => onDecrease(item.id, item.qty)}
+                                      onRemove={() => onRemove(item.id)} />}
             contentContainerStyle={styles.list}
           />
 
           <View style={styles.footer}>
-            <Text style={styles.total}>Tổng tiền: {totalPrice.toLocaleString()} VND</Text>
+            <Text style={styles.total}>Total: {formatter.format(totalPrice)}</Text>
             <TouchableOpacity style={styles.checkoutBtn} onPress={handleCheckout}>
-              <Text style={styles.checkoutText}>Thanh toán</Text>
+              <Text style={styles.checkoutText}>Checkout</Text>
             </TouchableOpacity>
           </View>
         </>

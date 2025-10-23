@@ -1,27 +1,29 @@
-import { CartItem } from "@/models/types";
+import { CartItem, Product } from "@/models/types";
 import { db } from "./db";
 import { getProductById } from "./product.service";
 
-export async function addItem(cartItem: CartItem) {
-  const product = await getProductById(cartItem.product_id);
-  if (!product) throw new Error('Sản phẩm không tồn tại.');
-  if (cartItem.qty > product.stock) throw new Error('Không đủ tồn kho.');
+export async function addItem(product: Product, qty: number = 1) {
+  if (!product) throw new Error("Product does not exist.");
 
   const existing = await db?.getFirstAsync<CartItem>(
-    'SELECT * FROM cart_items WHERE product_id = ?;',
-    [cartItem.product_id]
+    "SELECT * FROM cart_items WHERE product_id = ?;",
+    [product.product_id]
   );
 
+  if (existing && existing.qty >= product.stock) {
+    throw new Error("Insufficient stock.");
+  }
+
   if (existing) {
-    const newQty = Math.min(existing.qty + cartItem.qty, product.stock);
-    await db?.runAsync('UPDATE cart_items SET qty = ? WHERE id = ?;', [
+    const newQty = Math.min(existing.qty + qty, product.stock);
+    await db?.runAsync("UPDATE cart_items SET qty = ? WHERE id = ?;", [
       newQty,
       existing.id,
     ]);
   } else {
     await db?.runAsync(
-      'INSERT INTO cart_items (product_id, qty) VALUES (?, ?);',
-      [cartItem.product_id, cartItem.qty]
+      "INSERT INTO cart_items (product_id, qty) VALUES (?, ?);",
+      [product.product_id, qty]
     );
   }
 }
@@ -46,6 +48,13 @@ export async function getCart() {
   return rows;
 }
 
+export async function getCartCount() {
+  const result = await db?.getFirstAsync<{ total: number }>(
+    "SELECT SUM(qty) as total FROM cart_items;"
+  );
+  return result?.total || 0;
+}
+
 export async function updateQty(id: number, qty: number) {
   if (qty <= 0) {
     await deleteItem(id);
@@ -53,7 +62,7 @@ export async function updateQty(id: number, qty: number) {
   }
 
   const item = await db?.getFirstAsync<{ product_id: string }>(
-    'SELECT product_id FROM cart_items WHERE id = ?;',
+    "SELECT product_id FROM cart_items WHERE id = ?;",
     [id]
   );
 
@@ -63,10 +72,10 @@ export async function updateQty(id: number, qty: number) {
   if (!product) return;
 
   if (qty > product.stock) {
-    throw new Error('Số lượng vượt quá tồn kho.');
+    throw new Error("Insufficient stock.");
   }
 
-  await db?.runAsync('UPDATE cart_items SET qty = ? WHERE id = ?;', [qty, id]);
+  await db?.runAsync("UPDATE cart_items SET qty = ? WHERE id = ?;", [qty, id]);
 }
 
 export async function deleteItem(id: number) {
@@ -74,5 +83,5 @@ export async function deleteItem(id: number) {
 }
 
 export async function clearCart() {
-  await db?.runAsync('DELETE FROM cart_items');
+  await db?.runAsync("DELETE FROM cart_items");
 }

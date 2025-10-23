@@ -1,4 +1,5 @@
-import React from 'react';
+import { CartContext } from '@/contexts/CartContext';
+import React, { useContext } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
@@ -15,11 +16,13 @@ interface Props {
 }
 
 export default function CartItemCard({ item, onIncrease, onDecrease, onRemove }: Props) {
+  const { formatter } = useContext(CartContext);
+  
   return (
     <View style={styles.card}>
       <View style={styles.info}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.price}>{item.price.toLocaleString()} VND</Text>
+        <Text style={styles.price}>{formatter.format(item.price)}</Text>
 
         <View style={styles.quantityContainer}>
           <Pressable onPress={onDecrease} style={styles.qtyBtn}>
@@ -35,7 +38,7 @@ export default function CartItemCard({ item, onIncrease, onDecrease, onRemove }:
       </View>
 
       <Pressable onPress={onRemove} style={styles.removeBtn}>
-        <Text style={styles.removeText}>Xóa</Text>
+        <Text style={styles.removeText}>Delete</Text>
       </Pressable>
     </View>
   );

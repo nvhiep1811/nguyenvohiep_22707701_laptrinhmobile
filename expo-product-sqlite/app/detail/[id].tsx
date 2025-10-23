@@ -1,9 +1,9 @@
 import { Button } from '@/components/Button';
-import { deleteProduct, getProductById } from '@/db/product.service';
+import { CartContext } from '@/contexts/CartContext';
+import { getProductById } from '@/db/product.service';
 import { Product } from '@/models/types';
-import { router } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router/build/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function ProductDetail() {
@@ -11,10 +11,11 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState<Product | null>(null);
 
-  //getProductById
+  const { onAddToCart } = useContext(CartContext);
+
   useEffect(() => {
     if (id) {
-      getProductById(Number(id)).then((prod) => {
+      getProductById(id).then((prod) => {
         setProduct(prod);
       });
     }
@@ -26,18 +27,7 @@ export default function ProductDetail() {
       <Text style={styles.text}>Name: {product?.name}</Text>
       <Text style={styles.price}>Price: {product?.price}</Text>
       <Text style={styles.stock}>Stock: {product?.stock} units</Text>
-      <View style={{flexDirection: 'row', gap: 10, marginTop: 10}}>
-        <Button title="Edit" onPress={() => {
-          router.push({
-            pathname: "/form",
-            params: { product: JSON.stringify(product) }
-          });
-        }} />
-        <Button title="Delete" onPress={() => {
-          deleteProduct(Number(id));
-          router.back();
-        }} />
-      </View>
+      <Button title="Add to Cart" onPress={() => onAddToCart(product)} />
     </View>
   )
 }

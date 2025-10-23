@@ -1,26 +1,28 @@
-import { deleteProduct } from '@/db/product.service';
-import { Product } from '@/type/product';
+import { CartContext } from '@/contexts/CartContext';
+import { Product } from '@/models/types';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function ProductCard({product}: {product: Product}) {
+interface ProductCardProps {
+  product: Product;
+  onAddToCart: (product: Product) => void;
+}
+
+export default function ProductCard({product, onAddToCart}: ProductCardProps) {
+  
+  const { formatter } = useContext(CartContext);
   
   return (
     <Pressable style={styles.container} onPress={() => router.push(`/detail/${product.product_id}`)}>
         <Text style={{fontWeight: 'bold', fontSize: 18}}>{product.name}</Text>
-        <Text>$ {product.price}</Text>
+        <Text>{formatter.format(product.price)}</Text>
         <Text>Quantity: {product.stock}</Text>
-        <View style={{flexDirection: 'row', gap: 10, marginTop: 10, justifyContent: 'space-between'}}>
-          <Button title="View" onPress={() => router.push(`/detail/${product.product_id}`)} />
+        <View style={{flexDirection: 'row', gap: 10, marginTop: 10, justifyContent: 'flex-end'}}>
           <View style={{flexDirection: 'row', gap: 10}}>
-            <Button title="Edit" onPress={() => {
-              router.push({
-                pathname: "/form",
-                params: { product: JSON.stringify(product) }
-              });
-            }} />
-            <Button title="Delete" onPress={() => deleteProduct(product.product_id)} />
+            <Button title="View Details" onPress={() => router.push(`/detail/${product.product_id}`)} />
+
+            <Button title="Add to Cart" onPress={() => onAddToCart(product)} />
           </View>
         </View>
     </Pressable>
@@ -29,7 +31,7 @@ export default function ProductCard({product}: {product: Product}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 350,
+    width: 300,
     backgroundColor: '#fff',
     padding: 16,
     borderRadius: 8,

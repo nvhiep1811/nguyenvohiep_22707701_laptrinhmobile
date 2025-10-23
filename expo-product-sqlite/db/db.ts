@@ -3,13 +3,13 @@ import * as SQLite from "expo-sqlite";
 export let db: SQLite.SQLiteDatabase | null = null;
 
 export async function initDb(reset = false) {
-  await dropDb();
+  db = await SQLite.openDatabaseAsync("product.db");
 
-  db = await SQLite.openDatabaseAsync("demo.db");
+  await db.execAsync("PRAGMA foreign_keys = ON;");
 
-  await db.execAsync('PRAGMA foreign_keys = ON;');
-
-  if (reset) await dropDb();
+  if (reset) {
+    await dropDb();
+  }
 
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS products(
@@ -34,6 +34,7 @@ export async function initDb(reset = false) {
       id           INTEGER PRIMARY KEY AUTOINCREMENT,
       order_id     INTEGER NOT NULL,
       product_id   TEXT NOT NULL,
+      product_name TEXT NOT NULL,
       qty          INTEGER NOT NULL CHECK(qty > 0),
       price        REAL NOT NULL CHECK(price >= 0),
       FOREIGN KEY(order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
