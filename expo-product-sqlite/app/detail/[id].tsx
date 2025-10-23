@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
 import { deleteProduct, getProductById } from '@/db/product.service';
-import { Product } from '@/type/product';
+import { Product } from '@/models/types';
 import { router } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router/build/hooks';
 import React, { useEffect, useState } from 'react';

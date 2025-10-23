@@ -1,8 +1,9 @@
-import { Product } from "@/type/product";
+import { Product } from "@/models/types";
 import { db } from "./db";
 
 export async function addProduct(product: Product) {
-  await db!.runAsync("INSERT INTO products (name,price,stock) VALUES (?,?,?)", [
+  await db!.runAsync("INSERT INTO products (product_id, name,price,stock) VALUES (?,?,?,?)", [
+    product.product_id,
     product.name,
     product.price,
     product.stock,
@@ -10,21 +11,22 @@ export async function addProduct(product: Product) {
 }
 
 export async function seedData() {
-  // Check if data already exists
-  const existing = await db!.getFirstAsync<Product>(
-    "SELECT * FROM products LIMIT 1"
+  const result = await db?.getFirstAsync<{ count: number }>(
+    'SELECT COUNT(*) as count FROM products;'
   );
-  if (existing) return;
-  const sampleProducts: Product[] = [
-    { product_id: 1, name: "IPhone 13", price: 999, stock: 50 },
-    { product_id: 2, name: "Samsung Galaxy S21", price: 899, stock: 30 },
-    { product_id: 3, name: "Google Pixel 6", price: 799, stock: 20 },
-    { product_id: 4, name: "OnePlus 9", price: 729, stock: 15 },
-    { product_id: 5, name: "Sony Xperia 5 III", price: 949, stock: 10 },
-  ];
-  for (const product of sampleProducts) {
-    await addProduct(product);
-  }
+
+  if (result?.count === 0) {
+    const sampleProducts: Product[] = [
+      { product_id: 'p1', name: "IPhone 13", price: 999, stock: 50 },
+      { product_id: 'p2', name: "Samsung Galaxy S21", price: 899, stock: 30 },
+      { product_id: 'p3', name: "Google Pixel 6", price: 799, stock: 20 },
+      { product_id: 'p4', name: "OnePlus 9", price: 729, stock: 15 },
+      { product_id: 'p5', name: "Sony Xperia 5 III", price: 949, stock: 10 },
+    ];
+    for (const product of sampleProducts) {
+      await addProduct(product);
+    }
+  }  
 }
 
 export async function getProducts() {
@@ -32,7 +34,7 @@ export async function getProducts() {
   return res;
 }
 
-export async function getProductById(id: number) {
+export async function getProductById(id: string) {
   const res = await db!.getFirstAsync<Product>(
     "SELECT * FROM products WHERE product_id=?",
     [id]
@@ -47,6 +49,6 @@ export async function updateProduct(product: Product) {
   );
 }
 
-export async function deleteProduct(id: number) {
+export async function deleteProduct(id: string) {
   await db!.runAsync("DELETE FROM products WHERE product_id=?", [id]);
 }

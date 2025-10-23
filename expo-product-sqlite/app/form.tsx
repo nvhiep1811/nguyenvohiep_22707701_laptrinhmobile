@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
 import { addProduct, updateProduct } from '@/db/product.service';
-import { Product } from '@/type/product';
+import { Product } from '@/models/types';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
