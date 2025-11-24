@@ -2,7 +2,7 @@ import { addItem, clearCart, deleteItem, getCart, getCartCount, updateQty } from
 import { saveInvoice } from "@/db/invoice.service";
 import { OrderWithItems, Product } from "@/models/types";
 import { router } from "expo-router";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 export const CartContext = createContext(null);
@@ -21,6 +21,17 @@ export const CartProvider = ({children}: {children: React.ReactNode}) => {
       qty: number;
   }[]>([]);
   const [countCart, setCountCart] = useState(0);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const cart = await getCart();
+      setCartItems(cart);
+      const count = await getCartCount();
+      setCountCart(count);
+    };
+
+    fetchCart();
+  }, []);
 
   const onAddToCart = async (product: Product) => {
       try {
