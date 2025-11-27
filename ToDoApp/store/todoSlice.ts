@@ -1,76 +1,48 @@
-import { todoApi } from "@/hook/useFetch";
-import { ToDo } from "@/type/type";
-import { createSlice } from "@reduxjs/toolkit";
+import { Todo } from "@/type/type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: ToDo[] = [];
+type UpdateTodoPayload = { id: string; text: string };
 
-// const db = getDb();
-
-export const todoSlice = createSlice({
-  name: "todo",
-  initialState,
+const todosSlice = createSlice({
+  name: "todos",
+  initialState: [] as Todo[],
   reducers: {
-    loadFromDB: (state, action) => action.payload,
-    addToDo: (state, action) => {
+    todosLoaded: (state, action: PayloadAction<Todo[]>) => action.payload,
+
+    todoAdded: (state, action: PayloadAction<Todo>) => {
       state.push(action.payload);
-
-      try {
-        todoApi.add(action.payload);
-      } finally {
-      }
-      // db.runAsync("insert into todos(id, text) values(?, ?)", [
-      //   action.payload.id,
-      //   action.payload.text,
-      // ]);
     },
-    editToDo: (state, action) => {
-      const { id, todo } = action.payload;
-      const idx = state.findIndex((t) => t.id === id);
 
-      if (idx !== -1) {
-        try {
-          todoApi.update(id, todo);
-        } finally {
-          state[idx] = todo;
-        }
+    todoToggled: (state, action: PayloadAction<string>) => {
+      const todo = state.find((t) => t.id === action.payload);
+      if (todo) {
+        const newValue = todo.completed === 1 ? 0 : 1;
+        console.log("Redux toggle:", {
+          id: todo.id,
+          old: todo.completed,
+          new: newValue,
+        });
+        todo.completed = newValue;
       }
-
-      // db.runAsync("update todos set text=?, completed=? where id = ?", [
-      //   action.payload.text,
-      //   action.payload.completed,
-      //   action.payload.id,
-      // ]);
     },
-    removeToDo: (state, action) => {
-      const idx = state.findIndex((t) => t.id === action.payload);
-      if (idx !== -1) {
-        try {
-          todoApi.remove(action.payload);
-        } finally {
-          state.splice(idx, 1);
-        }
-      }
 
-      // db.runAsync("delete from todos where id = ?", [action.payload]);
-    },
-    toggleTodo: (state, action) => {
-      const idx = state.findIndex((t) => t.id === action.payload);
-      if (idx !== -1) {
-        try {
-          todoApi.toggle(action.payload, state[idx].completed ? 0 : 1);
-        } finally {
-          state[idx].completed = state[idx].completed ? 0 : 1;
-        }
+    todoUpdated: (state, action: PayloadAction<UpdateTodoPayload>) => {
+      const { id, text } = action.payload;
+      const todo = state.find((t) => t.id === id);
+      if (todo) {
+        todo.text = text.trim();
       }
-      // db.runAsync("update todos set completed=? where id = ?", [
-      //   state[idx].completed ? 0 : 1,
-      //   action.payload,
-      // ]);
+    },
+
+    todoDeleted: (state, action: PayloadAction<string>) => {
+      const index = state.findIndex((t) => t.id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     },
   },
 });
 
-const { actions, reducer } = todoSlice;
-export const { addToDo, editToDo, removeToDo, toggleTodo, loadFromDB } =
-  actions;
-export default reducer;
+export const { todosLoaded, todoAdded, todoToggled, todoUpdated, todoDeleted } =
+  todosSlice.actions;
+export default todosSlice.reducer;
