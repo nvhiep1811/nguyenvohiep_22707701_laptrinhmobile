@@ -35,7 +35,6 @@ export default function EditToDo() {
   }
 
   const todoData = todo as Todo;
-  const todoId = id as string; 
   
   const onEdit = async () => {
     if (text.trim() === '') {
