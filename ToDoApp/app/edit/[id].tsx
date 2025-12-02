@@ -8,8 +8,7 @@ import { Alert, Button, Text, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function EditToDo() {
-  const params = useLocalSearchParams();
-  const id = Array.isArray(params.id) ? params.id[0] : params.id; 
+  const { id } = useLocalSearchParams();
 
   const todo = useSelector((state: RootState) =>
     state.todos.find(t => t.id === id)
@@ -42,7 +41,7 @@ export default function EditToDo() {
       return;
     }
     
-    await todoApi.update(id, {...todo, text})
+    await todoApi.update(id as string, {...todo, text})
                   .then(res => dispatch(todoUpdated(res.data))); 
     
     router.back();

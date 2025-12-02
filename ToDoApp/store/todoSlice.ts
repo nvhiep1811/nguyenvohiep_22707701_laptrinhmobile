@@ -17,11 +17,6 @@ const todosSlice = createSlice({
       const todo = state.find((t) => t.id === action.payload);
       if (todo) {
         const newValue = todo.completed === 1 ? 0 : 1;
-        console.log("Redux toggle:", {
-          id: todo.id,
-          old: todo.completed,
-          new: newValue,
-        });
         todo.completed = newValue;
       }
     },
